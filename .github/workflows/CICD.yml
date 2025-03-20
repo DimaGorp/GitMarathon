@@ -1,0 +1,51 @@
+name: CICD
+on: 
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    Build:
+        name: Building a Project
+        continue-on-error: true
+        strategy:
+            matrix:
+                os: ["windows-latest","ubuntu-latest", "macos-latest"]
+        runs-on: ${{matrix.os}}
+        
+        steps:
+            - name: "Ckeckout actions"
+              uses: actions/checkout@v4
+            - name: Run Script
+              run: echo Building a project...
+
+    Test:
+        name: Run Tests
+        continue-on-error: true
+        strategy:
+            matrix:
+                os: ["windows-latest","ubuntu-latest", "macos-latest"]
+        runs-on: ${{matrix.os}}
+        
+        steps:
+            - name: "Ckeckout actions"
+              uses: actions/checkout@v4
+            - name: Run Script
+              run: echo Test a project...
+    Deploy:
+        name: Deploy Project
+        continue-on-error: true
+        needs: Build
+        strategy:
+            matrix:
+                os: ["windows-latest","ubuntu-latest", "macos-latest"]
+        runs-on: ${{matrix.os}}
+        
+        steps:
+            - name: "Ckeckout actions"
+              uses: actions/checkout@v4
+            - name: Run Script
+              run: echo Deploy a project...
+    
+
